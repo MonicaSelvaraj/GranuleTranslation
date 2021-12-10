@@ -29,21 +29,19 @@ for c1,c3 in zip(arr1, arr3): C1C3centers.append((c1 + c3)/2)
 C1C3centers = np.array(C1C3centers, dtype = float)
 #print(C1C3centers)
  
-#STEP 2 - Find the granule point that each center point is closest to and make a plot of distances. 
+#STEP 2 - Find the granule point and its index that each center point is closest to
 closestC2s = list() #List of the closest granule point
 minindex = list() #List of closest granule index
-#mindist = list() #List of distances between granule points and center points
 for c in C1C3centers:
     curindex = cdist([c], arr2).argmin()
     minindex.append(curindex)
-    #mindist.append(distance.curindex)
     closestC2s.append(arr2[curindex])
 minindex = np.array(minindex, dtype = int)
-#mindist = np.array(mindist, dtype = float)
 closestC2s = np.array(closestC2s, dtype = float)
-print(minindex)
-#print(mindist)
-print(closestC2s)
- 
 
+#STEP 3 - Find and plot distance between closest granule points and center points
+mindist = list()
+for c2,center in zip(closestC2s, C1C3centers): mindist.append(np.linalg.norm(c2-center))
+mindist = np.array(mindist, dtype = float)
+print(mindist)
 
