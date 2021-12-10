@@ -1,7 +1,9 @@
-#This script finds the center between C1:suntag-mRNA and C3:scfv-GFP
+#Find the centers between C1:suntag-mRNA and C3:scfv-GFP.
+#Find the closest granule point to each center point and plot distances
 
 import numpy as np
 import csv
+from scipy.spatial.distance import cdist
 
 def getPoints(filename):
     x = list(); y = list(); z = list()
@@ -17,15 +19,27 @@ def getPoints(filename):
     return (arr)
 
 arr1 = getPoints('FQ3DCoordinatesC1.csv')#suntag-mRNA
-#arr2 = getPoints('3DCoordinatesC2Bio.csv')#granules
+arr2 = getPoints('3DCoordinatesC2Bio.csv')#granules
 arr3 = getPoints('FQ3DCoordinatesC3.csv')#scfv-GFP
 
 #STEP 1 - Find center point between each pair of C1 and C3 points. 
-C1C3center = list()
-for c1,c3 in zip(arr1, arr3): C1C3center.append((c1 + c3)/2)
-C1C3center = np.array(C1C3center, dtype = float)
-print(C1C3center)
+C1C3centers = list()
+for c1,c3 in zip(arr1, arr3): C1C3centers.append((c1 + c3)/2)
+C1C3centers = np.array(C1C3centers, dtype = float)
+#print(C1C3centers)
+ 
+#STEP 2 - Find the granule point that each center point is closest to and make a plot of distances. 
+closestC2s = list()
+for c in C1C3centers:
+    closestC2s.append(arr2[cdist([c], arr2).argmin()])
+closestC2s = np.array(closestC2s, dtype = float)
+print(closestC2s)
  
 
+#D = spdist.cdist(, verts)
+
+
+#def closest_granule(node, nodes):
+#    return nodes[cdist([node], nodes).argmin()]
 
 
