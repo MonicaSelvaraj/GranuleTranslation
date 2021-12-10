@@ -3,8 +3,8 @@
 
 import numpy as np
 import csv
-from scipy.spatial import distance
 from scipy.spatial.distance import cdist
+import matplotlib.pyplot as plt
 
 def getPoints(filename):
     x = list(); y = list(); z = list()
@@ -43,5 +43,9 @@ closestC2s = np.array(closestC2s, dtype = float)
 mindist = list()
 for c2,center in zip(closestC2s, C1C3centers): mindist.append(np.linalg.norm(c2-center))
 mindist = np.array(mindist, dtype = float)
-print(mindist)
-
+#print(mindist)
+#Plot distances
+plt.plot(mindist)
+plt.show()
+plt.hist(mindist, bins='auto')
+plt.show()
