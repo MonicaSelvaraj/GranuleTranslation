@@ -1,10 +1,13 @@
 #Find the centers between C1:suntag-mRNA and C3:scfv-GFP.
 #Find the closest granule point to each center point and plot distances
+#Plot the center point, granules, and closest point on the granule
 
 import numpy as np
 import csv
 from scipy.spatial.distance import cdist
 import matplotlib.pyplot as plt
+from pyqtgraph.Qt import QtCore, QtGui
+import pyqtgraph.opengl as gl
 
 def getPoints(filename):
     x = list(); y = list(); z = list()
@@ -43,9 +46,28 @@ closestC2s = np.array(closestC2s, dtype = float)
 mindist = list()
 for c2,center in zip(closestC2s, C1C3centers): mindist.append(np.linalg.norm(c2-center))
 mindist = np.array(mindist, dtype = float)
-#print(mindist)
+print(mindist)
 #Plot distances
 plt.plot(mindist)
 plt.show()
 plt.hist(mindist, bins='auto')
 plt.show()
+
+#Creating a widget for 3D plotting 
+app = QtGui.QApplication([])
+w = gl.GLViewWidget()
+w.show()
+sp1 = gl.GLScatterPlotItem(pos=closestC2s, color = [1,0,0,0], pxMode=True, size = 10)
+sp1.setGLOptions('opaque')
+w.addItem(sp1)
+sp2 = gl.GLScatterPlotItem(pos=arr2, color = [0,0,1,0], pxMode=True, size = 5)
+sp2.setGLOptions('opaque')
+w.addItem(sp2)
+sp3 = gl.GLScatterPlotItem(pos=C1C3centers, color = [0,1,0,0], pxMode=True, size = 10)
+sp3.setGLOptions('opaque')
+w.addItem(sp3)
+# Start Qt event loop unless running in interactive mode.
+if __name__ == '__main__':
+    QtGui.QApplication.instance().exec_()
+
+
