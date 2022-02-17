@@ -6,7 +6,6 @@ import pyqtgraph.opengl as gl
 '''
 Reads and stores the intensity matrix for one z-slice 
 Cuts off first row and first column
-plots the intensity matrix
 '''
 def GetSliceIntensities(path):
 	with open(path, 'r') as csv_file:
@@ -15,10 +14,9 @@ def GetSliceIntensities(path):
 		for row in csv_reader:
 			matrix.append(row)
 		I = np.array(matrix)
-		I = I[1:,1:]
+		I = I[1:,1:] #cuts off first row and first column
 		I = [[float(y) for y in x] for x in I]
 		I = np.array(I)
-		#plt.spy(I);plt.show()
 	return I
 
 '''
