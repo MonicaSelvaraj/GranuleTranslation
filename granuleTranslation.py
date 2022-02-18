@@ -23,7 +23,7 @@ def getPoints(filename):
     return (arr)
 
 arr1 = getPoints('FQ3DCoordinatesC1.csv')#suntag-mRNA
-arr2 = getPoints('3DCoordinatesC2Bio.csv')#granules
+arr2 = getPoints('3DCoordinatesC2.csv')#granules
 arr3 = getPoints('FQ3DCoordinatesC3.csv')#scfv-GFP
 
 #STEP 1 - Find center point between each pair of C1 and C3 points. 
